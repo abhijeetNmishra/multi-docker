@@ -1,0 +1,16 @@
+sudo: required
+language: generic
+services:
+  - docker
+
+before_install: 
+  - docker build -t geminiabhijeet/react-test -f ./client/Dockfile.dev
+
+script: 
+  - docker run -e CI=true geminiabhijeet/react-test npm test
+
+after_success: 
+  - docker build -t geminiabhijeet/multi-client ./client
+  - docker build -t geminiabhijeet/multi-server ./server
+  - docker build -t geminiabhijeet/multi-nginx ./nginx
+  - docker build -t geminiabhijeet/multi-worker ./worker
