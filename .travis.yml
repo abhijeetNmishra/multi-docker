@@ -14,3 +14,10 @@ after_success:
   - docker build -t geminiabhijeet/multi-server ./server
   - docker build -t geminiabhijeet/multi-nginx ./nginx
   - docker build -t geminiabhijeet/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push geminiabhijeet/multi-client
+  - docker push geminiabhijeet/multi-nginx
+  - docker push geminiabhijeet/multi-server
+  - docker push geminiabhijeet/multi-worker
